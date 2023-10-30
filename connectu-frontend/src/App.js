@@ -1,45 +1,77 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-const API_URL = 'http://localhost:8000/api/'; // Django API endpoint
+import "./App.css";
+import { authActions } from "./store/authSlice";
+import axios from "./config/axiosConfig";
+import AuthRouter from "./components/routes/AuthRouter";
+import MainRouter from "./components/routes/MainRouter";
+import PrivateRoute from "./components/includes/PrivateRoute";
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [token, setToken] = useState('');
+    const [error, setError] = useState(false);
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const refreshToken = useSelector((state) => state.auth.token);
+    const alert = useSelector((state) => state.alert);
 
-  const handleLogin = () => {
-    axios.post(`${API_URL}/token/`, {
-      username: username,
-      password: password,
-    })
-    .then((response) => {
-      setToken(response.data.access);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  };
+    useEffect(() => {
+        console.log(alert);
+        if (isAuthenticated === true) {
+            const config = {
+                headers: {
+                    authorization: `Bearer ${refreshToken.access}`,
+                },
+            };
+            axios
+                .post("auth/token/refresh/", { refresh: refreshToken.refresh })
+                .then((response) => {
+                    console.log(response.data);
+                    dispatch(
+                        authActions.updateAccess({
+                            access: response.data.access,
+                        })
+                    );
+                })
+                .catch((error) => {
+                    if (
+                        error.response.status === 400 ||
+                        error.response.status === 401
+                    ) {
+                        dispatch(authActions.logout());
+                    }
+                });
 
-  return (
-    <div>
-      <h1>Authentication</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
-      {token && <p>Access Token: {token}</p>}
-    </div>
-  );
+            axios
+                .get("users/get-user-data/", config)
+                .then((res) => {
+                    console.log(res.data);
+                    dispatch(
+                        authActions.updateUserData({ userData: res.data })
+                    );
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, []);
+
+    return (
+        <>
+            <Routes>
+                <Route path="/auth/*" element={<AuthRouter />} />
+                <Route
+                    path="/*"
+                    element={
+                        <PrivateRoute>
+                            <MainRouter />
+                        </PrivateRoute>
+                    }
+                />
+            </Routes>
+        </>
+    );
 }
 
 export default App;

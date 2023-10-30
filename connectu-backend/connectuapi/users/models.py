@@ -14,10 +14,6 @@ class Author(models.Model):
     uid = models.CharField(max_length=255,null=True,blank=True)
     provider = models.CharField(max_length=255,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    saved_posts = models.ManyToManyField('posts.Posts',related_name="saved_by")
-
-    following  = models.ManyToManyField('users.Author',related_name='followers')
-
     def __str__(self):
         return self.name
 

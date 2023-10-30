@@ -74,7 +74,7 @@ def register(request):
 @permission_classes([AllowAny])
 def social_auth(request):
     username = request.data.get('username')
-    password = 'Safwan@#12'
+    password = 'ajuu1234'
     uid = request.data.get('uid')
 
     if not Author.objects.filter(uid=uid).exists() and not User.objects.filter(username=username).exists() :
