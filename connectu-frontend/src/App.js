@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -9,8 +9,11 @@ import AuthRouter from "./components/routes/AuthRouter";
 import MainRouter from "./components/routes/MainRouter";
 import PrivateRoute from "./components/includes/PrivateRoute";
 import AdminRouter from "./components/routes/AdminRouter";
+import Alert from "./components/UI/Alert";
+
 
 function App() {
+    const [error, setError] = useState(false);
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const refreshToken = useSelector((state) => state.auth.token);
@@ -59,6 +62,14 @@ function App() {
 
     return (
         <>
+
+            {alert.alert && (
+                <Alert
+                    onClick={(e) => setError(false)}
+                    message={alert.message}
+                    type={alert.type}
+                />
+            )}
             <Routes>
                 <Route path="/auth/*" element={<AuthRouter />} />
                 <Route

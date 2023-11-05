@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import axios from "../../config/axiosConfig";
 import profile from "../../assets/images/demo-profile.jpg";
+import InnerLoader from "../UI/InnerLoader";
 import { useSelector } from "react-redux";
 
 const Search = ({ onClose, searchKeyword }) => {
