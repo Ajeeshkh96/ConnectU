@@ -1,0 +1,38 @@
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-left: 20vh;
+  color: white;
+}
+
+.user-table th, .user-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+
+.user-table tr:hover {
+  background-color: #030101;
+}
+
+.btn-success {
+  background-color: green;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: rgb(211, 54, 19);
+  color: white;
+}
+
+.btn-danger {
+  background-color: rgb(211, 17, 17);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: rgb(19, 211, 48);
+  color: white;
+}

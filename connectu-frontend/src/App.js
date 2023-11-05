@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -8,9 +8,9 @@ import axios from "./config/axiosConfig";
 import AuthRouter from "./components/routes/AuthRouter";
 import MainRouter from "./components/routes/MainRouter";
 import PrivateRoute from "./components/includes/PrivateRoute";
+import AdminRouter from "./components/routes/AdminRouter";
 
 function App() {
-    const [error, setError] = useState(false);
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const refreshToken = useSelector((state) => state.auth.token);
@@ -55,7 +55,7 @@ function App() {
                     console.log(err);
                 });
         }
-    }, []);
+    });
 
     return (
         <>
@@ -69,6 +69,8 @@ function App() {
                         </PrivateRoute>
                     }
                 />
+                <Route path="/admin/*" element={<AdminRouter />} />
+
             </Routes>
         </>
     );
