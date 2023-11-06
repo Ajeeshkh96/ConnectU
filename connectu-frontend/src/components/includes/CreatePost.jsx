@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { postActions } from "../../store/postSlice";
 import { useNavigate } from "react-router-dom";
 
+
+
 const CreatePost = ({ onClose }) => {
     // local states 
     const [isSelected, setIsSelected] = useState(false);
@@ -31,8 +33,10 @@ const CreatePost = ({ onClose }) => {
             authorization: `Bearer ${access}`,
         },
     };
+      
 
     const uploadHandler = () => {
+
         const formData = new FormData();
         formData.append("description", captionRef.current.value);
         formData.append("location", locationRef.current.value);
@@ -158,7 +162,7 @@ const MainWrapper = styled.div`
     z-index: 30;
     top: 0;
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;

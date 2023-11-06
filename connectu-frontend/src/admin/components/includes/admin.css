@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #1d2634;
-  color: #9e9ea4;
+  background-color: #ffffff;
+  color: #5c5cac;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -57,7 +57,7 @@ body {
 #sidebar {
   grid-area: sidebar;
   height: 100%;
-  background-color: #363f4f;
+  background-color: #192539;
   overflow-y: auto;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;

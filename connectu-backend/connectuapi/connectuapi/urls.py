@@ -25,6 +25,8 @@ urlpatterns = [
 
     path('api/v1/auth/', include('api.v1.auth.urls')),
     path('api/v1/users/', include('api.v1.users.urls')),
+    path('api/v1/admin/', include('api.v1.admin.urls')),
+    path('api/v1/posts/', include('api.v1.posts.urls')),
 ]
 
-urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

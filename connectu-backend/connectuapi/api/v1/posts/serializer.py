@@ -19,12 +19,14 @@ class PostImagesSerializer(serializers.ModelSerializer):
         model = PostImages
         fields = ('image','id')
 
+
 class PostIdSerializer(serializers.ModelSerializer):
     images = PostImagesSerializer(many=True)
     class Meta:
         model = Posts 
         fields = ('id','images')
-        
+
+
 class CommentsSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
     isAuthor = serializers.SerializerMethodField()
@@ -42,6 +44,7 @@ class CommentsSerializer(serializers.ModelSerializer):
             return True
         else:
             return False
+
 
 class PostSerializer(serializers.ModelSerializer):
     images = PostImagesSerializer(many=True)

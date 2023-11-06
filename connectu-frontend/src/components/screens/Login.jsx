@@ -12,11 +12,10 @@ import google from "../../assets/images/google-psd.png";
 import user from "../../assets/icons/user.svg";
 import lock from "../../assets/icons/lock.svg";
 import logo from "../../assets/icons/logo.png";
+import Loader from "../UI/Loader";
 import facebook from "../../assets/images/facebook-psd.png";
 import twitter from "../../assets/images/twitter-psd.png";
 import { Helmet } from "react-helmet";
-import Loader from "../UI/Loader";
-
 
 function Login() {
     const navigate = useNavigate();

@@ -4,6 +4,7 @@ from django.db import models
 
 from users.models import Author
 
+
 class Posts(models.Model):
     author = models.ForeignKey(Author,related_name='posts',on_delete=models.CASCADE)
     likes = models.ManyToManyField(Author, related_name='liked_posts')
@@ -18,6 +19,7 @@ class Posts(models.Model):
     class Meta:
         verbose_name = 'Posts'
         verbose_name_plural = 'Posts'
+
 
 class PostImages(models.Model):
     image = models.FileField(upload_to='posts/')

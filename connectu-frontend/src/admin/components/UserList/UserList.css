@@ -3,7 +3,7 @@
   border-collapse: collapse;
   margin-top: 20px;
   margin-left: 20vh;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .user-table th, .user-table td {
@@ -14,7 +14,7 @@
 
 
 .user-table tr:hover {
-  background-color: #030101;
+  background-color: #d8db8e;
 }
 
 .btn-success {

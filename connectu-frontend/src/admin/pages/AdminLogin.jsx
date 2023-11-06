@@ -43,32 +43,46 @@ function AdminLogin() {
 
     return (
             <div>
-            <div className="wrapper">
-                <div className="container">
-                    <div className="col-left">
-                    <div className="login-text">
-                    </div>
-                    </div>
-                    <div className="col-right">
-                    <div className="login-form">
-                        <h2>Admin Login</h2>
-                        <form onSubmit={submitHandler}>
-                        <p>
-                            <label>Username<span>*</span></label>
-                            <input type="text" placeholder="Username" ref={usernameRef} />
-                        </p>
-                        <p>
-                            <label>Password<span>*</span></label>
-                            <input type="password" placeholder="Password" ref={passwordRef} />
-                        </p>
-                        <p>
-                            <button type="submit">Sign In</button>
-                        </p>
-                        </form>
-                    </div>
-                    </div>
-                </div>
-            </div>
+            <div className="container mt-5 w-25">
+      <div className="row">
+        <div className="col-md-6 col-left">
+          <div className="login-text">
+            <h2>Admin Login</h2>
+            {/* Your login text */}
+          </div>
+        </div>
+        <div className="col-md-6 col-right">
+          <div className="login-form">
+            <h2>Admin Login</h2>
+            <form onSubmit={submitHandler}>
+              <div className="form-group">
+                <label htmlFor="username">Username<span>*</span></label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  placeholder="Username"
+                  ref={usernameRef}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password<span>*</span></label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  placeholder="Password"
+                  ref={passwordRef}
+                />
+              </div>
+              <div className="form-group">
+                <button type="submit" className="btn btn-primary">Sign In</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
             {loader && <p>Loading...</p>}
             </div>

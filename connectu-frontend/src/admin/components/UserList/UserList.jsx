@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "./UserList.css"
+import { Table, Button } from 'reactstrap';
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -36,35 +36,39 @@ function UserList() {
   };
 
   return (
-    <div>
-      <table className='user-table'>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Options</th>
-            <th>Status</th>
+    <div className='container-fluid m-5'>
+    <Table striped bordered hover responsive>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {users.map((user, index) => (
+          <tr key={user.id}>
+            <td>{index + 1}</td>
+            <td>{user.username}</td>
+            <td>{user.email}</td>
+            <td>{user.is_active ? 'Active' : 'Inactive'}</td>
+            <td>
+              {user.is_active ? (
+                <Button color='danger' onClick={() => handleStatusUpdate(user.id)}>
+                  Block
+                </Button>
+              ) : (
+                <Button color='success' onClick={() => handleStatusUpdate(user.id)}>
+                  Unblock
+                </Button>
+              )}
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={user.id}>
-              <td>{index+1}</td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>
-                {user.is_active ? (
-                  <button className='btn-success' type='button' onClick={() => handleStatusUpdate(user.id)}>Block</button>
-                ) : (
-                  <button className='btn-danger' type='button' onClick={() => handleStatusUpdate(user.id)}>Unblock</button>
-                )}
-              </td>
-              {user.is_active ? <td>Active</td> : <td>Inactive</td>}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        ))}
+      </tbody>
+    </Table>
     </div>
   );
 }

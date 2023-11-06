@@ -454,7 +454,7 @@ const MainWrapper = styled.div`
 
 const ContentWrapper = styled.div`
     width: 80%;
-    height: 93vh;
+    height: 70vh;
     background: #fff;
     display: flex;
 
@@ -491,7 +491,7 @@ const ContentWrapper = styled.div`
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 3% 20px;
+            padding: 3% 10px;
             border-bottom: 1px solid #8080804e;
 
             .left {
@@ -535,7 +535,7 @@ const ContentWrapper = styled.div`
         }
         .comments {
             width: 100%;
-            height: 78%;
+            height: 60%;
             max-height: 78%;
             overflow-y: scroll;
 
@@ -578,7 +578,6 @@ const ContentWrapper = styled.div`
         }
         .bottom {
             width: 100%;
-            border-top: 1px solid #8080804e;
 
             .actions {
                 display: flex;
@@ -618,11 +617,8 @@ const ContentWrapper = styled.div`
                 }
             }
             .add-comment {
-                padding: 15px;
                 display: flex;
                 align-items: center;
-                gap: 10px;
-                border-top: 1px solid #8080804e;
 
                 img {
                     width: 30px;

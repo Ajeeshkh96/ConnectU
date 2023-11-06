@@ -38,7 +38,7 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
         <div className='sidebar-title'>
             <div className='sidebar-brand'>
-                <BsPerson  className='icon_header'/> Admin
+                <BsPerson  className='icon_header text-white'/> <span className='text-white'>Admin</span>
             </div>
             <span className='icon close_icon' onClick={OpenSidebar}>x</span>
         </div>
@@ -57,7 +57,7 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
             </li>
         <br />
             <li className='sidebar-list-item'>
-                <Link to='/admin/user_list/'>
+                <Link to='/admin/user_post/'>
                     <BsImageFill className='icon'/> Posts
                 </Link>
             </li>

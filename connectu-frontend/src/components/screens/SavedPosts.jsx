@@ -34,7 +34,7 @@ const SavedPosts = () => {
             <MainWrapper>
                 <h1>Saved Posts</h1>
                 <BottomWrapper>
-                    {posts.map((post) => (
+                {posts.map((post) => (
                         <PostWrapper
                             key={post.id}
                             onClick={(e) => setShowPost(post.id)}

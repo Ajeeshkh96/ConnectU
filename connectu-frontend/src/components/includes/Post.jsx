@@ -65,7 +65,7 @@ const Post = ({ post }) => {
 
     const likeHandler = (e) => {
         axios
-            .get(`posts/${post.id}/like/`, config)
+            .put(`posts/${post.id}/like/`, null, config)  // Use axios.put instead of axios.get
             .then((res) => {
                 console.log(res.data);
                 setIsLiked(res.data.liked);
@@ -75,6 +75,7 @@ const Post = ({ post }) => {
                 console.log(e.message);
             });
     };
+    
     const savePostHandler = (e) => {
         axios
             .get(`posts/${post.id}/save-post/`, config)

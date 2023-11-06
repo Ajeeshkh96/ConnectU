@@ -8,9 +8,8 @@ import axios from "./config/axiosConfig";
 import AuthRouter from "./components/routes/AuthRouter";
 import MainRouter from "./components/routes/MainRouter";
 import PrivateRoute from "./components/includes/PrivateRoute";
-import AdminRouter from "./components/routes/AdminRouter";
 import Alert from "./components/UI/Alert";
-
+import AdminRouter from './components/routes/AdminRouter'
 
 function App() {
     const [error, setError] = useState(false);
@@ -58,11 +57,10 @@ function App() {
                     console.log(err);
                 });
         }
-    });
+    }, []);
 
     return (
         <>
-
             {alert.alert && (
                 <Alert
                     onClick={(e) => setError(false)}
@@ -80,8 +78,7 @@ function App() {
                         </PrivateRoute>
                     }
                 />
-                <Route path="/admin/*" element={<AdminRouter />} />
-
+                <Route path="/admin/*" element={<AdminRouter/>} />
             </Routes>
         </>
     );
