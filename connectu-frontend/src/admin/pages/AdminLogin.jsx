@@ -43,7 +43,7 @@ function AdminLogin() {
 
     return (
             <div>
-            <div className="container mt-5 w-25">
+            <div className="container w-25">
       <div className="row">
         <div className="col-md-6 col-left">
           <div className="login-text">

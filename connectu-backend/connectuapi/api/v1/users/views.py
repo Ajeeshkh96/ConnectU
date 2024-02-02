@@ -5,7 +5,10 @@ import base64
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
+
+from users.models import Author
 from .serializer import (
     ProfileSerializer,
     EditAuthorSerializer,
@@ -14,12 +17,13 @@ from .serializer import (
     SearchSerializer,
     FollowingSerializer,
 )
-from users.models import Author
+
 from api.v1.posts.serializer import PostSerializer
 import requests
 import json
 from django.conf import settings
 import wget
+
 
 class ProfileView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
@@ -99,9 +103,43 @@ class SearchView(generics.ListAPIView):
         return Response(response_data)
 
 
-class FollowUserView(generics.UpdateAPIView):
+class FollowUserView(APIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = FollowingSerializer
+
+    def get(self, request, user_id):
+        if Author.objects.filter(id=user_id).exists():
+            author = request.user.author
+            other_user = Author.objects.get(id=user_id)
+
+            if not author.following.filter(id=user_id).exists():
+                author.following.add(other_user)
+                other_user.refresh_from_db()
+                followers_count = other_user.followers.count()
+                response_data = {
+                    'statusCode': 6000,
+                    'isFollowing': True,
+                    'followersCount': followers_count,
+                    'message': f'following {other_user.user.username} successfully'
+                }
+                return Response(response_data)
+            else:
+                author.following.remove(other_user)
+                other_user.refresh_from_db()
+                followers_count = other_user.followers.count()
+
+                response_data = {
+                    'statusCode': 6000,
+                    'isFollowing': False,
+                    'followersCount': followers_count,
+                    'message': f'unfollowing {other_user.user.username} successfully'
+                }
+                return Response(response_data)
+        else:
+            response_data = {
+                'statusCode': 6001,
+                'message': 'user not found'
+            }
+            return Response(response_data)
 
 
 class GetFollowersView(generics.ListAPIView):

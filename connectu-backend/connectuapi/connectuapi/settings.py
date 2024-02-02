@@ -1,15 +1,17 @@
 from datetime import timedelta
 import os
 from pathlib import Path
+import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
-SECRET_KEY = 'django-insecure-xxo#_(v%r1#n_89+lkbj%tra2vv)a=)9**x2-f&)7n@qs5)k^-'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -25,11 +27,11 @@ INSTALLED_APPS = [
     'users',
     'web',
     'posts',
+    'channels',
 ]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +60,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'connectuapi.wsgi.application'
+
+ASGI_APPLICATION = "connectuapi.asgi.application"
+
 
 DATABASES = {
     'default': {
@@ -125,6 +130,9 @@ REST_FRAMEWORK = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 
+CHANNEL_LAYERS = {
+    "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"},
+}
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),

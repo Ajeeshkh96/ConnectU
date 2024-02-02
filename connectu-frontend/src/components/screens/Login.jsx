@@ -32,41 +32,58 @@ function Login() {
             password: passwordRef.current.value,
         };
         axios
-            .post("auth/login-user/", data)
-            .then((response) => {
-                console.log(response.data);
-                if (response.data.statusCode === 6001) {
-                    console.log("user not found");
-                    setLoader(false);
-                    dispatch(
-                        alertActions.addAlert({
-                            type: "err",
-                            message: "username or password is incorrect",
-                        })
-                    );
-                } else {
-                    dispatch(
-                        authActions.loginUser({
-                            token: response.data.token,
-                            profileData: response.data.userData,
-                        })
-                    );
-                    setLoader(false);
-                    navigate("/");
-                }
-            })
-            .catch((error) => {
-                console.log(error);
+        .post("auth/login-user/", data)
+        .then((response) => {
+            console.log(response.data);
+            if (response.data.statusCode === 6001) {
+                console.log("user not found");
                 setLoader(false);
-                if (error.response.status === 404) {
-                    dispatch(
-                        alertActions.addAlert({
-                            type: "err",
-                            message: "User not found",
-                        })
-                    );
-                }
-            });
+                dispatch(
+                    alertActions.addAlert({
+                        type: "err",
+                        message: response.data.message || "Username or password is incorrect",
+                    })
+                );
+            } else {
+                dispatch(
+                    authActions.loginUser({
+                        token: response.data.token,
+                        profileData: response.data.userData,
+                    })
+                );
+                setLoader(false);
+                navigate("/");
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            setLoader(false);
+            if (error.response && error.response.status === 404) {
+                dispatch(
+                    alertActions.addAlert({
+                        type: "err",
+                        message: "User not found",
+                    })
+                );
+            } else if (error.response && error.response.status === 401) {
+                // Check for specific status code indicating blocked account
+                dispatch(
+                    alertActions.addAlert({
+                        type: "err",
+                        message: "Your account is blocked. Contact the admin for assistance.",
+                    })
+                );
+            } else {
+                // Handle other error cases
+                dispatch(
+                    alertActions.addAlert({
+                        type: "err",
+                        message: "An unexpected error occurred. Please try again later.",
+                    })
+                );
+            }
+        });
+
     };
 
     const googleLoginHandler = () => {

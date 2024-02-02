@@ -15,6 +15,10 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 import os
 
+# Your existing view handling post deletion
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 
 class AdminLoginView(APIView):
     permission_classes = [AllowAny]
@@ -30,6 +34,7 @@ class AdminLoginView(APIView):
             return JsonResponse({'message': 'Login successful'})
         else:
             return JsonResponse({'message': 'Login failed'}, status=401)
+
 
 class AdminLogoutView(APIView):
     def post(self, request):
@@ -60,7 +65,7 @@ class UserStatusUpdate(APIView):
 
 class UserPost(APIView):
     def get(self, request):
-        posts = Posts.objects.all()
+        posts = Posts.objects.filter(is_deleted=False)
         post_data = []
 
         for post in posts:
@@ -89,7 +94,7 @@ class UserPost(APIView):
 class UserPostDelete(APIView):
 
     def get(self, request):
-        posts = Posts.objects.all()
+        posts = Posts.objects.filter(is_deleted=False)
         post_data = []
 
         for post in posts:
@@ -105,10 +110,12 @@ class UserPostDelete(APIView):
         return Response(post_data)
 
     def delete(self, request, post_id):
-        post = get_object_or_404(Posts, id=post_id)
-        # Check if the user has permission to delete the post here.
-        # Perform the post deletion.
-        post.delete()
-        return JsonResponse({'message': 'Post deleted successfully'})
+        post = get_object_or_404(Posts, id=post_id, is_deleted=False)
+
+        # Soft deletion by updating is_deleted field to True
+        post.is_deleted = True
+        post.save()
+
+        return JsonResponse({'message': 'Post soft-deleted successfully'})
 
 

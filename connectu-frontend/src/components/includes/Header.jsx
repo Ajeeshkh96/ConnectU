@@ -10,6 +10,7 @@ import add from "../../assets/icons/add.svg";
 import discover from "../../assets/icons/discover.svg";
 import notification from "../../assets/icons/notification.svg";
 import profileUser from "../../assets/icons/profile-user.svg";
+
 import bookmark from "../../assets/icons/bookmark.svg";
 import settings from "../../assets/icons/settings.svg";
 import logout from "../../assets/icons/logout.svg";
@@ -79,7 +80,7 @@ function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/">
+                                <Link to="/notifications/">
                                     <img src={notification} alt="" />
                                 </Link>
                             </li>
@@ -87,15 +88,11 @@ function Header() {
                                 <img
                                     onClick={(e) => setViewMenu(true)}
                                     className={styles.profile}
-                                    // src={profile}
-                                    src={
-                                        userData?.image
-                                            ? userData?.image
-                                            : profile
-                                    }
+                                    src={userData?.image ? userData.image : profile}
                                     alt="profile_image"
                                 />
                             </li>
+
                         </ul>
                     </nav>
                 </div>

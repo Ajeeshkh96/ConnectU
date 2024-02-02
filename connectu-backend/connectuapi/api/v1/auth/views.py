@@ -125,15 +125,25 @@ class SocialAuthView(APIView):
                     url, headers=headers, data=json.dumps(data)).json()
 
                 user_image = Author.objects.get(uid=uid).image
-                response_obj = {
-                    'statusCode': 6000,
-                    'message': 'success',
-                    'data': result,
-                    'userData': {
-                        'username': username,
-                        'image': f'{ssl}://{host}/media/{user_image}/'
+                if user_image:
+                    response_obj = {
+                        'statusCode': 6000,
+                        'message': 'success',
+                        'data': result,
+                        'userData': {
+                            'username': username,
+                            'image': f'{ssl}://{host}/media/{user_image}'
+                        }
                     }
-                }
+                else:
+                    response_obj = {
+                        'statusCode': 6000,
+                        'message': 'success',
+                        'data': result,
+                        'userData': {
+                            'username': username,
+                        }
+                    }
                 return Response(response_obj)
             else:
                 response_obj = {
@@ -161,15 +171,25 @@ class SocialAuthView(APIView):
             user = User.objects.get(username=username)
             user_image = user.author.image
 
-            response_obj = {
-                'statusCode': 6000,
-                'message': 'success',
-                'data': result,
-                'userData': {
-                    'username': username,
-                    'image': f'{ssl}://{host}/media/{user_image}/'
+            if user_image:
+                response_obj = {
+                    'statusCode': 6000,
+                    'message': 'success',
+                    'data': result,
+                    'userData': {
+                        'username': username,
+                        'image': f'{ssl}://{host}/media/{user_image}/'
+                    }
                 }
-            }
+            else:
+                response_obj = {
+                    'statusCode': 6000,
+                    'message': 'success',
+                    'data': result,
+                    'userData': {
+                        'username': username,
+                    }
+                }
             return Response(response_obj)
 
 
@@ -197,6 +217,15 @@ class LoginUserView(APIView):
             url, headers=headers, data=json.dumps(data))
 
         if 'detail' in result.json():
+            # Check if the user exists
+            user = User.objects.filter(username=username).first()
+            if user and not user.is_active:
+                response_obj = {
+                    'statusCode': 6001,
+                    'message': 'Your account is blocked. Contact the admin for assistance.'
+                }
+                return Response(response_obj)
+
             response_obj = {
                 'statusCode': 6001,
                 'message': 'Username or password is incorrect'

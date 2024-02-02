@@ -10,6 +10,7 @@ import NotFound from "../screens/NotFound";
 import Profile from "../screens/Profile";
 import ProfileSettings from "../screens/ProfileSettings";
 import SavedPosts from "../screens/SavedPosts";
+import Notifications from "../screens/Notifications";
 
 function MainRouter() {
     return (
@@ -20,6 +21,7 @@ function MainRouter() {
                 <Route path="/p/:postId/" element={<PostModal />} />
                 <Route path="/saved-posts/" element={<SavedPosts />} />
                 <Route path="/explore/" element={<Explore />} />
+                <Route path="/notifications/" element={<Notifications />} />
                 <Route path=":username/*" element={<Profile />}>
                     <Route path="settings/" element={<ProfileSettings />} />
                     <Route path="followers/" element={<Followers />} />
